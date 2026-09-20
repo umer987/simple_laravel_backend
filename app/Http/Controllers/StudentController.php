@@ -46,6 +46,10 @@ class StudentController extends Controller
      */
     public function index(Request $req)
     {
+        $search = $req->query('search');
+
+        $students = Student::when($search, function ($query, $search) {
+                            return $query->where('name', 'like', "%{$search}%")
      
 
 
