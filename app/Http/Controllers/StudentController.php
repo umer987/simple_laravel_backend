@@ -38,4 +38,15 @@ class StudentController extends Controller
         $student->delete();
         return 'student delete';
     }
+
+ /**
+     * 1️⃣ INDEX — Get all students (with optional search & pagination)
+     * GET /api/students
+     * GET /api/students?search=ali&page=2
+     */
+    public function index(Request $req)
+    {
+     
+
+
 }
