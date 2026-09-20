@@ -55,6 +55,12 @@ class StudentController extends Controller
                         ->orderBy('created_at', 'desc')
                         ->paginate(10);
 
+        return response()->json([
+            'message'  => 'Students fetched successfully',
+            'students' => $students,
+        ], 200);
+    }
+
 
 
 }
