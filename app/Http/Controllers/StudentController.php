@@ -61,6 +61,11 @@ class StudentController extends Controller
         ], 200);
     }
 
+    /**
+     * 2️⃣ STORE — Create a new student
+     * POST /api/students
+     */
+
 
 
 }
