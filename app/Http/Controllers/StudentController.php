@@ -69,7 +69,94 @@ class StudentController extends Controller
     {
         // Validate input
         $validated = $req->validate([
+            'name'  => 'required|string|max:255',
+            'email' => 'required|email|unique:students,email',
+            'batch' => 'required|string|max:50',
+            'age'   => 'nullable|integer|min:1|max:120',
+        ]);
 
+        // Create student
+        $student = Student::create($validated);
+
+        return response()->json([
+            'message' => 'Student created successfully',
+            'student' => $student,
+        ], 201); // 201 = Created
+    }
+
+    /**
+     * 3️⃣ SHOW — Get one student by ID
+     * GET /api/students/{id}
+     */
+    public function show($id)
+    {
+        $student = Student::find($id);
+
+        if (!$student) {
+            return response()->json([
+                'message' => 'Student not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'Student fetched successfully',
+            'student' => $student,
+        ], 200);
+    }
+
+    /**
+     * 4️⃣ UPDATE — Update an existing student
+     * PUT /api/students/{id}
+     */
+    public function update(Request $req, $id)
+    {
+        // Find student
+        $student = Student::find($id);
+
+        if (!$student) {
+            return response()->json([
+                'message' => 'Student not found',
+            ], 404);
+        }
+
+        // Validate (note: "sometimes" = only validate if present)
+        $validated = $req->validate([
+            'name'  => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|email|unique:students,email,' . $id,
+            'batch' => 'sometimes|required|string|max:50',
+            'age'   => 'nullable|integer|min:1|max:120',
+        ]);
+
+        // Update
+        $student->update($validated);
+
+        return response()->json([
+            'message' => 'Student updated successfully',
+            'student' => $student,
+        ], 200);
+    }
+
+    /**
+     * 5️⃣ DESTROY — Delete a student
+     * DELETE /api/students/{id}
+     */
+    public function destroy($id)
+    {
+        $student = Student::find($id);
+
+        if (!$student) {
+            return response()->json([
+                'message' => 'Student not found',
+            ], 404);
+        }
+
+        $student->delete();
+
+        return response()->json([
+            'message' => 'Student deleted successfully',
+            'id'      => $id,
+        ], 200);
+    }
 
 
 }
