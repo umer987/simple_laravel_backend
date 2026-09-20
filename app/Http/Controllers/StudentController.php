@@ -50,7 +50,11 @@ class StudentController extends Controller
 
         $students = Student::when($search, function ($query, $search) {
                             return $query->where('name', 'like', "%{$search}%")
-     
+                                         ->orWhere('email', 'like', "%{$search}%");
+                        })
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(10);
+
 
 
 }
