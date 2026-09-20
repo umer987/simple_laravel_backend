@@ -65,6 +65,10 @@ class StudentController extends Controller
      * 2️⃣ STORE — Create a new student
      * POST /api/students
      */
+    public function store(Request $req)
+    {
+        // Validate input
+        $validated = $req->validate([
 
 
 
